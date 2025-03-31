@@ -1,0 +1,40 @@
+package com.example.projectapp;
+
+import android.os.Bundle;
+import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DatabaseReference;
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeActivity extends AppCompatActivity {
+    private ListView flowerListView;
+    private FlowerAdapter flowerAdapter;
+    private List<Flower> flowerList;
+    private DatabaseReference databaseReference;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.home_page);
+
+        flowerListView = findViewById(R.id.lv_flowers);
+        flowerList = new ArrayList<>();
+
+        // Add flowers with local images
+        flowerList.add(new Flower("Rose Bouquet", "$12.99", R.drawable.roses));
+        flowerList.add(new Flower("Lily Arrangement", "$15.50", R.drawable.white_lily));
+        flowerList.add(new Flower("Orchid Special", "$18.25", R.drawable.orchid));
+        flowerList.add(new Flower("Sunflower", "$14.50", R.drawable.sunflower));
+        flowerList.add(new Flower("Tulips", "$10.50", R.drawable.tulip));
+        flowerList.add(new Flower("Daisy day", "$11.50", R.drawable.daisy));
+        flowerList.add(new Flower("Spider Lilies", "$14.50", R.drawable.spider_lilies));
+        flowerList.add(new Flower("Lilies of the valley", "$10.50", R.drawable.lily_of_the_valley));
+        flowerList.add(new Flower("Skeleton Flower", "$11.50", R.drawable.skeleton_flower));
+
+
+        // Set adapter
+        flowerAdapter = new FlowerAdapter(this, flowerList);
+        flowerListView.setAdapter(flowerAdapter);
+    }
+}
