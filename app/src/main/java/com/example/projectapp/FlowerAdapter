@@ -1,0 +1,77 @@
+package com.example.projectapp;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
+import java.util.List;
+
+public class FlowerAdapter extends BaseAdapter {
+    private Context context;
+    private List<Flower> flowerList;
+
+    public FlowerAdapter(Context context, List<Flower> flowerList) {
+        this.context = context;
+        this.flowerList = flowerList;
+    }
+
+    @Override
+    public int getCount() {
+        return flowerList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return flowerList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_flower, parent, false);
+            holder = new ViewHolder();
+            holder.flowerImage = convertView.findViewById(R.id.flower_image);
+            holder.flowerName = convertView.findViewById(R.id.flower_name);
+            holder.detailButton = convertView.findViewById(R.id.detail_button);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        Flower flower = flowerList.get(position);
+        holder.flowerName.setText(flower.getName());
+        holder.flowerImage.setImageResource(flower.getImageResId()); // Load local image
+
+        // Handle detail button click
+        holder.detailButton.setOnClickListener(v -> showFlowerDetails(flower));
+
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        ImageView flowerImage;
+        TextView flowerName;
+        Button detailButton;
+    }
+
+    // Show details in a dialog
+    private void showFlowerDetails(Flower flower) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(flower.getName())
+                .setMessage("Price: $" + flower.getPrice())
+                .setPositiveButton("OK", null)
+                .show();
+    }
+}
