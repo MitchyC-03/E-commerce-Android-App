@@ -1,0 +1,17 @@
+package com.example.projectapp;
+
+public class Flower {
+    private String name;
+    private String price;
+    private int imageResId; // Store resource ID instead of URL
+
+    public Flower(String name, String price, int imageResId) {
+        this.name = name;
+        this.price = price;
+        this.imageResId = imageResId;
+    }
+
+    public String getName() { return name; }
+    public String getPrice() { return price; }
+    public int getImageResId() { return imageResId; }
+}
